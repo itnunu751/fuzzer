@@ -1,0 +1,11 @@
+Fuzzer written in c and compiled using gcc.
+
+Input Generation Strategy:
+In fuzzer.c, I created a mutate function that takes in input buffer and size. It loops through the input buffer and decides whether to modify the current byte by generating a random number and comparing it to the MUTATION_PROB threshold which I set to 0.13. If it is less than this threshold, then it will change the byte with a new randomly generated number. 
+
+In the main function, after the mutation function is called, there is a check to see if when the EXTEND_INtERVAL of 500 is reached. When it is reached, then it is extended by EXTEND_AMOUNT which is 10. 
+
+The mutation is then written to stdout to be piped to the test programs.
+
+Dependencies: 
+Since this program is written to take a seed file in, the dependency of the mutation is dependent on this seed. The random numbers are not actually random and depend on what this seed is. This is why given the same seed and number of iterations, the output will be the same every time. 
